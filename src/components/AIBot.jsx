@@ -106,7 +106,6 @@ const AIVoiceAssistant = ({ propertyData }) => {
               />
             ))}
           </MessageList>
-
           {/* Message Input Field */}
           <MessageInput
             placeholder="Type your message or use voice..."
