@@ -8,8 +8,10 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import MicRoundedIcon from '@mui/icons-material/MicRounded';
+import HearingRoundedIcon from '@mui/icons-material/HearingRounded';
 
-const AIVoiceAssistant = ({ salesData }) => {
+const AIVoiceAssistant = ({ propertyData }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -30,6 +32,7 @@ const AIVoiceAssistant = ({ salesData }) => {
     }
   }, [messages]);
 
+  // Function to format messages for API
   const formatMessages = (messages) => {
     return messages.map((msg) => ({
       role: msg.role,
@@ -61,7 +64,6 @@ const AIVoiceAssistant = ({ salesData }) => {
     recognition.start();
   };
 
-
   // Function to handle message sending and AI response retrieval
   const handleSend = async (message) => {
     if (!message.trim()) return;
@@ -75,7 +77,7 @@ const AIVoiceAssistant = ({ salesData }) => {
       const res = await fetch("/api/gemini", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: formatMessages(newMessages), salesData }),
+        body: JSON.stringify({ messages: formatMessages(newMessages), propertyData }),
       });
 
       const data = await res.json();
@@ -89,7 +91,7 @@ const AIVoiceAssistant = ({ salesData }) => {
   };
 
   return (
-    <div style={{ height: "500px", width: "400px" }}>
+    <div className="flex flex-col items-center w-90 h-120 max-w-sm sm:w-90 md:w-90 bg-white rounded-lg shadow-lg p-4 z-10 absolute bottom-5 right-0" >
       <MainContainer className="rounded-xl shadow-xl py-2">
         <ChatContainer>
           <MessageList typingIndicator={isTyping ? <TypingIndicator content="AI is thinking..." /> : null}>
@@ -117,12 +119,12 @@ const AIVoiceAssistant = ({ salesData }) => {
       </MainContainer>
       <button
         onClick={startListening}
-        className={`mt - 2 p-2 rounded-lg text-white ${isListening ? "bg-red-600" : "bg-blue-600"}`}
+        className={`mt-2 p-2 rounded-lg text-white ${isListening ? "bg-red-600" : "bg-blue-600"}`}
         style={{ width: "100%", marginTop: "10px" }}
       >
-        {isListening ? "Listening..." : "🎤 Speak"}
+        {isListening ? <HearingRoundedIcon /> : <MicRoundedIcon />}
       </button>
-    </div >
+    </div>
   );
 };
 
