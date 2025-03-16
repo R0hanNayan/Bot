@@ -70,7 +70,7 @@ export default function Home() {
         </div>
       )}
 
-      {isOpen ? (
+      {propertyData && ( isOpen ? (
         <div className="fixed bottom-20 right-6 sm:right-10 flex flex-col items-end">
           <button
             className="fixed bottom-6 right-6 sm:bottom-10 sm:right-10 bg-red-300 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg"
@@ -89,7 +89,7 @@ export default function Home() {
         >
           <SmartToyRoundedIcon fontSize="large" />
         </button>
-      )}
+      ))}
     </div>
   );
 }
